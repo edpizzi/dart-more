@@ -4,3 +4,4 @@ library;
 export 'src/cache/cache.dart';
 export 'src/cache/delegate.dart';
 export 'src/cache/loader.dart';
+export 'src/cache/lru_immediate.dart';

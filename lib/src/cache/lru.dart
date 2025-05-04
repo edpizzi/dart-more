@@ -16,29 +16,8 @@ class LruCache<K, V> extends Cache<K, V> {
 
   final Map<K, CacheItem<V>> cached = {};
 
-  FutureOr<V> load(K key) {
-    var valueFuture = loader(key);
-    final item = CacheItem(valueFuture);
-    cached[key] = item;
-    if (valueFuture != null && valueFuture is Future<V>) {
-      valueFuture = valueFuture.then((value) {
-        item.value = value;
-        return value;
-      });
-    }
-    return valueFuture;
-  }
-
   @override
   Future<V?> getIfPresent(K key) async => promote(key)?.value;
-
-  V? getIfPresentImmediate(K key) {
-    final value = promote(key)?.value;
-    if (value is V) {
-      return value;
-    }
-    return null;
-  }
 
   @override
   Future<V> get(K key) async {
